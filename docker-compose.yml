@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+    depends_on:
+      - database
+    image: back-tech-task-app
+    container_name: back-tech-task-app
+    ports:
+      - "3000:5000"
+    environment:
+      PORT: 5000
+      DB_USER: postgres
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: development
+
+  database:
+    image: postgres:12.3
+    volumes:
+      - ./init-sql:/docker-entrypoint-initdb.d:ro
+    environment:
+      POSTGRES_DB: development
+      TZ: "Asia/Tokyo"
+      POSTGRES_HOST_AUTH_METHOD: trust
