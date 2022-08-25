@@ -1,8 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 router.get('/', function (req, res, next) {
-
+  if (req.session.username) {
+      next();
+  } else {
+      res.redirect('/login');
+  }
   const client = require("../db_client").pg_client()
 
   client.connect()
