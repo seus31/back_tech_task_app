@@ -22,5 +22,12 @@ module.exports = {
         return Promise.reject('メールアドレスまたはパスワードが正しくありません。');
       }
     });
-  }
+  },
+  resetCheck: (email) => {
+    return models.user.findOne({ where: { email: email } }).then(async (user) => {
+      if (!user) {
+        return Promise.reject('メールアドレスが存在しません。');
+      }
+    });
+  },
 };

@@ -15,7 +15,11 @@ router.post('/',
     const errors = validationResult(req);
     if (errors.array().length === 0) {
       req.session.email = req.body.email;
-      res.redirect('/user');
+      if (req.session.redirect_url) {
+        const redirect_url = req.session.redirect_url
+        req.session.redirect_url = null
+        res.redirect(redirect_url);
+      }
     }
     res.render('login', { title: 'ログイン', errors: errors.array() })
 })

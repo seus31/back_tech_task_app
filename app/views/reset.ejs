@@ -6,24 +6,24 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="/login" method="post">
+    <form action="/password/reset" method="post">
       <div class="errors">
         <% for (let error of errors) { %>
           <p class="messages"><%- error.msg %></p>
         <% } %>
       </div>
-      <div class="form-group">
-        <label for="email">メールアドレス</label>
-        <input id="email" type="email" name="email" />
-      </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="email" value="<%= email %>">
       <div class="form-group">
         <label for="password">パスワード</label>
         <input id="password" type="password" name="password" />
       </div>
       <div class="form-group">
-        <button type="submit"><%= title %></button>
-        <a href="/register">新規登録へ</a>
-        <a href="/password/forgot">パスワードを忘れた方はこちら</a>
+        <label for="password_confirm">パスワード確認</label>
+        <input id="password_confirm" type="password" name="password_confirm" />
+      </div>
+      <div class="form-group">
+        <button type="submit">リセットする</button>
       </div>
     </form>
   </body>
