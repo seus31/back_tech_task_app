@@ -19,15 +19,22 @@ services:
     command: >
       bash -c "npm install &&
       npm install -g nodemon &&
+      npm install -g sequelize-cli &&
       npm run watch"
     depends_on:
       - database
-
   database:
     image: postgres:12.3
-    volumes:
-      - ./init-sql:/docker-entrypoint-initdb.d:ro
     environment:
       POSTGRES_DB: development
       TZ: "Asia/Tokyo"
       POSTGRES_HOST_AUTH_METHOD: trust
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - 8888:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    depends_on:
+      -   database
