@@ -10,3 +10,16 @@ a {
 div.form-group {
   margin-top: 1rem;
 }
+
+div.form-group label {
+  display: inline-block;
+  width: 8rem;
+}
+
+div.form-group a {
+  margin-left: 1rem;
+}
+
+form div.errors p.messages {
+  color: #ff0000;
+}
