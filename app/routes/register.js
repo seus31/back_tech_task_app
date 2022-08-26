@@ -4,12 +4,15 @@ const { body, validationResult } = require('express-validator');
 const validate = require('../libs/validate');
 const models = require('../models');
 const bcrypt = require('bcrypt');
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: false });
 
-router.get('/', (req, res, next) => {
-  res.render('register', { title: '新規登録', errors: [] })
+router.get('/', csrfProtection, (req, res, next) => {
+  res.render('register', { title: '新規登録', csrfToken: req.csrfToken(), errors: [] })
 })
 
 router.post('/',
+  csrfProtection,
   body('username', 'ユーザー名が正しくありません。')
     .isAlphanumeric()
     .withMessage('ユーザー名は半角英数字で入力してください。')

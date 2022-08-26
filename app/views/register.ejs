@@ -12,6 +12,7 @@
           <p class="messages"><%- error.msg %></p>
         <% } %>
       </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       <div class="form-group">
         <label for="username">ユーザー名</label>
         <input id="username" type="text" name="username" />
