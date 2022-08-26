@@ -21,11 +21,11 @@ router.post('/',
   body('email', 'メールアドレスが正しくありません。')
     .isEmail()
     .withMessage('メールアドレスの形式が正しくありません。')
-    .custom(async (email, {req}) => validate.validateEmail(email)),
+    .custom((email, {req}) => validate.validateEmail(email)),
   body('password', 'パスワードが正しくありません。')
-    .matches(/^\S?[a-zA-Z0-9.?/-@_=!]{8,}$/, "i")
+    .matches(/^[a-zA-Z0-9.?/-@_=!]{8,}$/, "i")
     .withMessage('パスワードは8文字以上で、大文字・小文字・数字・記号『.?/-@_=!』を使って入力してください。'),
-  body('password_confirm', 'パスワードが正しくありません。')
+  body('password_confirm', 'パスワード確認が正しくありません。')
     .custom((passwordConfirm, { req }) => validate.validatePasswordConfirm(passwordConfirm, req)),
   (req, res, next) => {
     const errors = validationResult(req);

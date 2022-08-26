@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -7,10 +7,5 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-
-    <% for (var item of sql_result) { %>
-      <p><%= new Date(item.timestamp).toUTCString() %> </p>
-      <p>メッセージ内容： <%= item.comment %></p>
-      <% } %>
   </body>
 </html>

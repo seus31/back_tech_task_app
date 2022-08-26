@@ -4,6 +4,7 @@ const session = require('express-session');
 const createError = require('http-errors');
 const logger = require('morgan');
 const path = require('path');
+const redis = require('redis')
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -11,25 +12,28 @@ const registerRouter = require('./routes/register');
 
 const app = express();
 
-const sessionData = {
-  secret: 'fnvareopbnrae0a2384gh@anvv',
-  cookie: {
-    // 30分
-    maxAge: 1800
-  },
-  resave: false,
-  saveUninitialized: false
-};
+const RedisStore = require('connect-redis')(session)
+const redisClient = redis.createClient({
+  host: 'redis',
+  port: 6379,
+  prefix: 'sid:',
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(session(sessionData));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: 'fnvareopbnrae0a2384gh',
+  resave: false,
+  saveUninitialized: false,
+  store: new RedisStore({ client: redisClient }),
+  cookie: { httpOnly: true, secure: false, maxage: 1000 * 60 * 30 }
+}))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

@@ -18,8 +18,7 @@ services:
       DB_NAME: development
     command: >
       bash -c "npm install &&
-      npm install -g nodemon &&
-      npm install -g sequelize-cli &&
+      npm install -g nodemon sequelize-cli &&
       npm run watch"
     depends_on:
       - database
@@ -38,3 +37,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: password
     depends_on:
       -   database
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
