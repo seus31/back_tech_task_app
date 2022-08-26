@@ -3,10 +3,10 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const validate = require('../libs/validate');
 const models = require('../models');
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 
 router.get('/', (req, res, next) => {
-  res.render('register', { title: '新規登録', register_path: '/register', errors: [] })
+  res.render('register', { title: '新規登録', errors: [] })
 })
 
 router.post('/',
@@ -21,14 +21,12 @@ router.post('/',
   body('email', 'メールアドレスが正しくありません。')
     .isEmail()
     .withMessage('メールアドレスの形式が正しくありません。')
-    .custom(async (email, {req}) => validate.validateEmail(email))
-    .withMessage('このメールアドレスはすでに使われています。'),
+    .custom(async (email, {req}) => validate.validateEmail(email)),
   body('password', 'パスワードが正しくありません。')
     .matches(/^\S?[a-zA-Z0-9.?/-@_=!]{8,}$/, "i")
     .withMessage('パスワードは8文字以上で、大文字・小文字・数字・記号『.?/-@_=!』を使って入力してください。'),
   body('password_confirm', 'パスワードが正しくありません。')
-    .custom((passwordConfirm, { req }) => validate.validatePasswordConfirm(passwordConfirm, req))
-    .withMessage('パスワードが一致していません。'),
+    .custom((passwordConfirm, { req }) => validate.validatePasswordConfirm(passwordConfirm, req)),
   (req, res, next) => {
     const errors = validationResult(req);
 
@@ -49,7 +47,7 @@ router.post('/',
       }).catch((e => console.log(e)))
     }
 
-    res.render('register', {title: '新規登録', register_path: '/register', errors: errors.array()})
+    res.render('register', {title: '新規登録', errors: errors.array()})
   })
 
 module.exports = router;

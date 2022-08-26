@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="<%= register_path %>" method="post">
+    <form action="/register" method="post">
       <div class="errors">
         <% for (let error of errors) { %>
           <p class="messages"><%- error.msg %></p>
@@ -29,7 +29,8 @@
         <input id="password_confirm" type="password" name="password_confirm" />
       </div>
       <div class="form-group">
-        <button type="submit"><%= title %></button>
+        <button type="submit">送信</button>
+        <a href="/login">ログインへ</a>
       </div>
     </form>
   </body>
