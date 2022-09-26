@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: false });
 
+// TODO: csrfをミドルウェア化
 router.get('/', csrfProtection, (req, res, next) => {
   res.render('register', { title: '新規登録', csrfToken: req.csrfToken(), errors: [] })
 })
